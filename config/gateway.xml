@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gateway xmlns="http://www.zend.com/gateway/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <authenticate>
+      <adapter type="token">
+         <resolver type="callback">
+            <callback>Service\AuthenticationService::validateToken</callback>
+         </resolver>
+      </adapter>
+   </authenticate>
+   <response default="true" type="json">
+      <header name="Access-Control-Allow-Origin" value="*"/>
+      <header name="no-cache" value="true"/>
+   </response>
+   <route authenticate="false" dispatchable="RPCServices::postLoginAction" url="/login" methods="POST">
+      <parameters>
+         <parameter name="email" required="true" source="body"/>
+         <parameter name="password" required="true" source="body"/>
+      </parameters>
+   </route>
+   <route authenticate="false" dispatchable="RPCServices::getLAction" url="/" methods="GET"/>
+</gateway>
